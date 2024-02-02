@@ -1,0 +1,280 @@
+<?php 
+	require_once 'global.php';
+?>
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="en">
+<!--<![endif]-->
+<head>
+	<?php require_once THEPATH.'head.inc.php'; ?>
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-1T2ZMJ7X2R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-1T2ZMJ7X2R');
+</script>
+
+<body>
+	<!-- BEGIN #page-container 
+	<div id="page-container" class="fade">-->
+	
+	<?php require_once THEPATH.'header.php'; ?>		
+	<?php require_once THEPATH.'module/slider.inc.php'; ?>
+	
+		<div id="promotions" class="section-container bg-white">
+			<div class="container">
+				<div class="row row-space-10">
+					<div class="col-md-6">
+						<div class="promotion promotion-lg bg-black-lighter">
+							<div class="promotion-caption promotion-caption-inverse">
+								<h4 class="promotion-title">Selamat Datang di Kampus Kami</h4>
+								<p class="promotion-desc text-white">Sekolah Tinggi Ilmu Ekonomi Sabang (STIES) Banda Aceh didirikan  pada tahun 1986 oleh Yayasan Sabang Merauke. Inisiatif pendirian STIES bertujuan untuk memberikan kontribusi dalam pengembangan dunia pendidikan tinggi di Provinsi Aceh, khususnya dalam bidang Ilmu Ekonomi, Manajemen dan Akuntansi.</p>
+								<a href="#" class="promotion-btn">Pelajari lebih lanjut..</a>
+							</div>
+						</div>
+					</div>
+						<?php 
+							$news = "SELECT * FROM ".$icdb->prefix."kategori, ".$icdb->prefix."berita WHERE ".$icdb->prefix."kategori.id_kategori = ".$icdb->prefix."berita.id_kategori AND ".$icdb->prefix."berita.id_kategori IN ('1') ORDER BY ".$icdb->prefix."berita.id_berita DESC LIMIT 0,2";
+							$rows = $icdb->get_rows($news);
+							
+							$news2 = "SELECT * FROM ".$icdb->prefix."kategori, ".$icdb->prefix."berita WHERE ".$icdb->prefix."kategori.id_kategori = ".$icdb->prefix."berita.id_kategori AND ".$icdb->prefix."berita.id_kategori IN ('1') ORDER BY ".$icdb->prefix."berita.id_berita DESC LIMIT 2,2";
+							$rows2 = $icdb->get_rows($news2);	
+
+							$c=array("bg-blue-darker","bg-red-darker","bg-yellow-darker","bg-green-darker");
+							shuffle($c);
+							$i=0;
+						?>
+					<div class="col-md-3 col-sm-6">
+						<?php	foreach ($rows as $row) {
+									$time = $row['tanggal'];
+									$title_seo=$row['judul_seo'];							
+									$url_link 	= BASE_URL.$title_seo.".html";
+									
+						?>
+						<div class="promotion <?php echo $c[$i++]; ?>">
+							<div class="promotion-caption promotion-caption-inverse text-right">
+								<div class="promotion-price"><?php echo $row['judul']; ?></div>
+								<p class="promotion-desc"><?php echo tgl_full($row['tanggal']); ?></p>
+								<a href="<?php echo $url_link; ?>" class="promotion-btn">Lihat Detail</a>
+							</div>
+						</div><?php } ?>
+					</div>
+					<div class="col-md-3 col-sm-6">
+						<?php	foreach ($rows2 as $row) {
+								$time = $row['tanggal'];
+								$title_seo=$row['judul_seo'];							
+								$url_link 	= BASE_URL.$title_seo.".html";
+						?>
+						<div class="promotion <?php echo $c[$i++]; ?>">
+							<div class="promotion-caption promotion-caption-inverse text-right">
+								<div class="promotion-price"><?php echo $row['judul']; ?></div>
+								<p class="promotion-desc"><?php echo tgl_full($row['tanggal']); ?></p>
+								<a href="<?php echo $url_link; ?>" class="promotion-btn">Lihat Detail</a>
+							</div>
+						</div><?php } ?>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div id="trending-items" class="section-container bg-silver-lighter p-b-0">
+			<div class="container">				
+				<div class="row row-space-30">
+					<div class="col-md-4 col-sm-8 m-b-20">
+					
+					<h4 class="section-title m-b-0 clearfix text-green-lighter">
+						<a href="berita/" class="pull-right m-l-5 ">INDEX</a>BERITA KAMPUS<img class="m-l-10" src="assets/img/bgtitle.png"/>
+					</h4><hr><?php 
+						$news = "SELECT * FROM ".$icdb->prefix."kategori, ".$icdb->prefix."berita WHERE ".$icdb->prefix."kategori.id_kategori = ".$icdb->prefix."berita.id_kategori AND ".$icdb->prefix."berita.id_kategori IN ('1') AND ".$icdb->prefix."berita.adv = '1' ORDER BY ".$icdb->prefix."berita.id_berita DESC LIMIT 4,5";
+						$rows = $icdb->get_rows($news);									
+					?>				
+						<ul class="list-unstyled">
+							<?php foreach ($rows as $row) {
+								$time = $row['tanggal'];
+								$title_seo=$row['judul_seo'];							
+								$url_link 	= BASE_URL.$title_seo.".html";
+							?>
+							<li class="m-b-10 media">
+                                 <div class="pull-left m-r-10">
+                                    <img class="crop" src="<?php echo BASE_URL.photos."/".$row['gambar']; ?>" alt="<?php echo $row['judul']; ?>"> 
+                                 </div>
+								<div class="policy">
+									<div class="policy-info">
+										<h4><a href="<?php echo $url_link ?>" class="text-green-lighter"><?php echo $row['judul']; ?></a></h4>
+										<p><?php echo tgl_full($time); ?></p>
+									</div>
+								</div>
+							</li><?php } ?>
+						</ul>
+					</div>
+					<div class="col-md-4 col-sm-8 m-b-20">
+					<h4 class="section-title m-b-0 text-orange-lighter clearfix">
+					<a href="pengumuman/" class="pull-right m-l-5">INDEX</a>PENGUMUMAN<img class="m-l-10" src="assets/img/bgtitle.png"/></h4><hr>
+						<?php 
+							$news = "SELECT * FROM ".$icdb->prefix."kategori, ".$icdb->prefix."berita WHERE ".$icdb->prefix."kategori.id_kategori = ".$icdb->prefix."berita.id_kategori AND ".$icdb->prefix."berita.id_kategori IN ('2') AND ".$icdb->prefix."berita.adv = '1' ORDER BY ".$icdb->prefix."berita.id_berita DESC LIMIT 0,5";
+							$rows = $icdb->get_rows($news);									
+						?>
+						<ul class="list-unstyled">
+							<?php	foreach ($rows as $row) {
+									$time = $row['tanggal'];
+									$title_seo=$row['judul_seo'];							
+									$url_link 	= BASE_URL.$title_seo.".html";
+							?>
+							<li class="media m-b-10">
+							    <div class="pull-left m-r-10">
+                                    <img class="crop" src="<?php echo BASE_URL.photos."/".$row['gambar']; ?>" alt="<?php echo $row['judul']; ?>"> 
+                                 </div>
+								<div class="policy">			
+									<div class="policy-info">
+										<h4><a href="<?php echo $url_link ?>" class="text-orange-lighter"><?php echo $row['judul']; ?></a></h4>
+										<p><?php echo tgl_full($time); ?></p>
+									</div>
+								</div>
+							</li><?php } ?>
+						</ul>
+					</div>
+					<div class="col-md-4 col-sm-8 m-b-20">
+					<h4 class="section-title m-b-0 text-blue clearfix">
+					<a href="agenda/" class="pull-right m-l-5 ">INDEX</a>AGENDA KAMPUS<img class="m-l-10" src="assets/img/bgtitle.png"/></h4><hr>
+						<?php 
+							$news = "SELECT * FROM ".$icdb->prefix."kategori, ".$icdb->prefix."berita WHERE ".$icdb->prefix."kategori.id_kategori = ".$icdb->prefix."berita.id_kategori AND ".$icdb->prefix."berita.id_kategori IN ('3') ORDER BY ".$icdb->prefix."berita.id_berita DESC LIMIT 0,5";
+							$rows = $icdb->get_rows($news);									
+						?>
+						<ul class="list-unstyled">
+							<?php	foreach ($rows as $row) {
+									$time = $row['tanggal'];
+									$title_seo=$row['judul_seo'];							
+									$url_link 	= BASE_URL.$title_seo.".html";
+							?>
+							<li class="media m-b-10">
+							    <div class="pull-left m-r-10">
+                                    <img class="crop" src="<?php echo BASE_URL.photos."/".$row['gambar']; ?>" alt="<?php echo $row['judul']; ?>"> 
+                                 </div>
+								<div class="policy">			
+									<div class="policy-info">
+										<h4><a href="<?php echo $url_link ?>" class="text-blue-lighter"><?php echo $row['judul']; ?></a></h4>
+										<p><?php echo tgl_full($time); ?></p>
+									</div>
+								</div>
+							</li><?php } ?>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="tablet-list" class="section-container">
+			<div class="container">
+				<div class="row row-space-20">
+					<div class="col-md-4 m-b-20">
+					<?php include THEPATH."sidebar.inc.php" ?>
+					</div>
+					<div class="col-md-8">
+						<h4 class="text-blue">
+						<?php
+							$viewx = $icdb->get_row("SELECT * FROM ".$icdb->prefix."video WHERE status=1 LIMIT 1");
+						?>
+						<img class="pull-right p-t-10" src="assets/img/bgtitle.png"/><?php echo $viewx['judul'] ?></h4><hr>						
+						<div class="embed-responsive embed-responsive-16by9">
+							<iframe class="embed-responsive-item" src="<?php echo str_replace('watch?v=','embed/',$viewx['embed']); ?>" allowfullscreen></iframe>
+						</div>
+						<div class="row m-t-10 m-b-10">
+							<div class="col-md-12"><?php echo $viewx['deskripsi'] ?></div>
+						</div>
+						<div class="row row-space-30">
+							<div class="col-md-6 m-t-20">
+									<?php
+							$viewxx = $icdb->get_row("SELECT * FROM ".$icdb->prefix."video WHERE status=1 LIMIT 1,1");
+						?>
+							<h4 class="text-blue"><img class="pull-right p-t-10" src="assets/img/bgtitle.png"/><?php echo $viewxx['judul']; ?></h4><hr>
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item" src="<?php echo str_replace('watch?v=','embed/',$viewxx['embed']); ?>" allowfullscreen></iframe>
+								</div>
+							</div>
+							<div class="col-md-6  m-t-20">
+									<?php
+							$viewxx = $icdb->get_row("SELECT * FROM ".$icdb->prefix."video WHERE status=1 LIMIT 2,1");
+						?>
+							<h4 class="text-blue"><img class="pull-right p-t-10" src="assets/img/bgtitle.png"/><?php echo $viewxx['judul']; ?></h4><hr>
+								<div class="embed-responsive embed-responsive-16by9">
+									<iframe class="embed-responsive-item" src="<?php echo str_replace('watch?v=','embed/',$viewxx['embed']); ?>" allowfullscreen></iframe>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="subscribe" class="section-container bg-silver p-t-30 p-b-30">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-6 col-sm-6">
+						<div class="subscription">
+							<div class="subscription-intro">
+								<h4>Tetap Terhubung.</h4>
+								<i>Hubungi kami kapanpun!</i>
+							</div>
+							<div class="subscription-intro m-l-20">
+								<h4>Whatsapp Kami</h4>
+								<i>+62 85297802035</i>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6 col-sm-6">
+						<div class="social">
+							<div class="social-intro">
+								<h4>Follow Sosial Media Kami</h4>
+								<i>Berikan saran anda!</i>
+							</div>
+							<div class="social-list">
+								<a href="https://www.facebook.com/stiesabang"><i class="fab fa-facebook"></i></a>
+								<a href="https://twitter.com/"><i class="fab fa-twitter"></i></a>
+								<a href="https://www.instagram.com"><i class="fab fa-instagram"></i></a>
+								<a href="https://plus.google.com"><i class="fab fa-google-plus"></i></a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- BEGIN #footer -->
+		<?php require_once THEPATH.'footer.php'; ?>
+		
+		<div style="display:none">
+  <a style="display:none;" href="https://www.maaintcargo.com/" rel="dofollow">pengeluaran macau</a>
+  <a style="display:none;" href="https://www.sarvotarzan.com/" rel="dofollow">situs toto</a>
+  <a style="display:none;" href="https://www.dieuhoadaikin.net/" rel="dofollow">situs togel</a>
+  <a style="display:none;" href="https://taximakris.com/" rel="dofollow">situs togel</a>
+  <a style="display:none;" href="https://amc.com.gt/" rel="dofollow">toto togel</a>
+  <a style="display:none;" href="https://diabetes-supply.com/" rel="dofollow">situs togel resmi</a>
+  <a style="display:none;" href="https://tempusorologi.it/" rel="dofollow">situs toto</a>
+
+
+</div>
+		<!-- END #footer -->
+
+	<!-- ================== BEGIN BASE JS ================== -->
+	<script src="<?php echo BASE_URL ?>assets/js/jquery-3.3.1.min.js"></script>
+	<script src="<?php echo BASE_URL ?>assets/css/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<!--[if lt IE 9]>
+		<script src="assets/crossbrowserjs/html5shiv.js"></script>
+		<script src="assets/crossbrowserjs/respond.min.js"></script>
+		<script src="assets/crossbrowserjs/excanvas.min.js"></script>
+	<![endif]-->
+	<script src="<?php echo BASE_URL ?>assets/js/js.cookie.js"></script>
+	<script src="<?php echo BASE_URL ?>assets/js/jquery.paroller.min.js"></script>
+	<script src="<?php echo BASE_URL ?>assets/js/apps.min.js"></script>
+	<!-- ================== END BASE JS ================== -->
+	
+	<script>
+		$(document).ready(function() {
+			App.init();
+		});
+	</script>
+<script type="text/javascript">$(document).ready(function(){$('body').append("</bo"+"dy>");});</script><!-- </body> -->
